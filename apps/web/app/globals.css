@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@source "./**/*.{js,ts,jsx,tsx,mdx}";
+@source "../components/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../hooks/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../lib/**/*.{js,ts,jsx,tsx,mdx}";
+
+:root {
+  --bg-base: #06080d;
+  --bg-elevated: #0e1118;
+  --line-soft: rgba(255, 255, 255, 0.14);
+  --text-strong: #f5f7ff;
+  --text-muted: #9ba3b6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background:
+    radial-gradient(1000px 500px at 15% -20%, #1b2947 0%, transparent 65%),
+    radial-gradient(800px 400px at 90% -10%, #1f2f26 0%, transparent 60%),
+    var(--bg-base);
+  color: var(--text-strong);
+  min-height: 100vh;
+}
+
+a,
+button,
+input {
+  font: inherit;
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

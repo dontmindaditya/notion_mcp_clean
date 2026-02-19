@@ -1,0 +1,51 @@
+version: "3.9"
+
+# ─── Notion MCP Integration — Development Services ──────────────────
+#
+# Usage:
+#   docker compose up -d          Start PostgreSQL + Redis
+#   docker compose down           Stop everything
+#   docker compose down -v        Stop + delete all data (fresh start)
+#   docker compose logs -f        Watch logs
+#   docker compose ps             Check running status
+
+services:
+  # ── PostgreSQL ───────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: notion_mcp_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: notion_user
+      POSTGRES_PASSWORD: notion_pass
+      POSTGRES_DB: notion_mcp
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U notion_user -d notion_mcp"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis ────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: notion_mcp_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local
+  redisdata:
+    driver: local
